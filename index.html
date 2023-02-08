@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>TO_DO_LIST</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&family=Nunito:wght@400;600&display=swap"
+      rel="stylesheet"
+    />
+
+    <link rel="stylesheet" href="./css/style.css" />
+  </head>
+  <body>
+    <header class="header">
+      <h1 class="header__title">ToDo List</h1>
+    </header>
+    <!-- СПИСОК -->
+    <main>
+      <section>
+        <div class="container">
+          <!-- ФОРМА ДЛЯ ВВОДА ДАННЫХ -->
+          <form class="create_field">
+            <!-- INPUT_FIELD-->
+            <label for="input">
+              <input
+                class="form__input"
+                id="input"
+                placeholder="Сделать удаление завершенных и всех"
+            /></label>
+            <!-- ADD_BUTTON -->
+            <label for="add_button">
+              <button class="form__button add" id="add_button">Добавить</button>
+            </label>
+          </form>
+          <!-- БЛОК СО СПИСКОМ ЗАДАЧ -->
+
+          <ul class="list">
+            <li class="list__item">
+              <label for="check_done">
+                <input type="checkbox" class="check_done" id="check_done"
+              /></label>
+              <span class="item__name">
+                Сделать удаление каждого элемента по крестику справа
+              </span>
+              <label for="delete_button">
+                <button class="delete_button" id="delete_button">❌</button>
+              </label>
+            </li>
+            <li class="list__item">
+              <label for="check_done">
+                <input type="checkbox" class="check_done" id="check_done"
+              /></label>
+              <span class="item__name"> Сделать удаление права </span>
+              <label for="delete_button">
+                <button class="delete_button" id="delete_button">❌</button>
+              </label>
+            </li>
+            <li class="list__item">
+              <label for="check_done">
+                <input type="checkbox" class="check_done" id="check_done"
+              /></label>
+              <span class="item__name"> удаление права </span>
+              <label for="delete_button">
+                <button class="delete_button" id="delete_button">❌</button>
+              </label>
+            </li>
+          </ul>
+
+          <!-- ПОЛЕ ДЛЯ УДАЛЕНИЯ ДАННЫХ -->
+          <div class="delete_field">
+            <!-- DELETE_DONE_BUTTON -->
+            <label for="delete_done_button">
+              <button class="form__button delete_done" id="delete_done_button">
+                Удалить завершенные
+              </button>
+            </label>
+            <!-- DELETE_ALL_BUTTON -->
+            <label for="delet_all_button">
+              <button class="form__button delete_all" id="delet_all_button">
+                Удалить все
+              </button>
+            </label>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer></footer>
+  </body>
+  <script src="./data/script.js" type="module"></script>
+</html>
