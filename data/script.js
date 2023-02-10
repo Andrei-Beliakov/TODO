@@ -19,7 +19,10 @@ function clearAll() {
 }
 
 function clearDone() {}
-function deleteTodo() {}
+function deleteTodo(el) {
+  // let del = elem.parentElement.remove();
+  console.log("click!");
+}
 
 function createString() {
   {
@@ -80,4 +83,4 @@ form.addEventListener("submit", (ev) => {
 todoAddBtn.addEventListener("click", createString);
 deleteAllBtn.addEventListener("click", clearAll);
 deleteDoneBtn.addEventListener("click", clearDone);
-todoDeleteBtn.addEventListener("click", deleteTodo);
+todoDeleteBtn.addEventListener("click", (el) => deleteTodo(el.target));
