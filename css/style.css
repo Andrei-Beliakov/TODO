@@ -20,6 +20,7 @@ body {
   color: black;
   margin: 80px 0 33px;
 }
+
 .container {
   width: 594px;
   margin: 0 auto;
@@ -27,7 +28,8 @@ body {
   border-radius: 16px;
   overflow: hidden;
 }
-.create_field {
+
+.add_field {
   display: flex;
   justify-content: space-between;
   background: #ffffff;
@@ -38,11 +40,12 @@ body {
 .list {
   background: #ffffff;
   border-top: 1px solid #dee2e6;
+  display: none;
 }
 
 .delete_field {
   justify-content: space-between;
-  display: flex;
+  display: none;
   background: #f5f5f5;
   padding: 18px 24px;
 }
@@ -59,6 +62,8 @@ body {
   border: 1px solid #ced4da;
   border-radius: 4px;
   padding: 9px 31px 8px 14px;
+  box-shadow: none;
+  transition: 0.2s;
 }
 
 .form__button {
@@ -73,6 +78,7 @@ body {
   border-radius: 4px;
   transition: 0.2s;
 }
+
 .form__button:hover {
   background-color: rgb(223, 172, 33);
 }
@@ -106,17 +112,28 @@ ul {
   margin-bottom: 26px;
 }
 
-.check_done {
-  /* display: block; */
+.todo__done {
+  outline: none;
   margin-right: 16px;
 }
 
-.check_delete {
-  /* display: block; */
-  margin-left: 16px;
+.todo__done:checked + .todo__name {
+  color: #a9acaf;
+  text-decoration: line-through;
 }
 
-.item__name {
+.todo__delete {
+  outline: none;
+  margin-left: 16px;
+  background: #ffffff;
+  border: 0;
+}
+
+.todo__name {
   text-align: left;
   width: 100%;
+}
+
+.delete_button:hover {
+  color: blue;
 }

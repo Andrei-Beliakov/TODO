@@ -1,0 +1,10 @@
+[{
+id: new Date().toISOString(),
+text: "Todo text here",
+isDone: false
+},
+{
+id: new Date().toISOString(),
+text: "Todo text here",
+isDone: false
+},] (изменено)
