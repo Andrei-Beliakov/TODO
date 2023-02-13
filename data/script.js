@@ -38,9 +38,18 @@ const addTodosArray = () => {
 
 //КОРРЕКТИРОВКА МАССИВА ТУДУШЕК ПО СОСТОЯНИЮ ЧЕКБОКСА
 const switchDone = (id) => {
-  // // for (key in todosArray) drawTodosArray();
-  // if (todosArray.id)
-  console.log("switch");
+  todosArray = todosArray.map((item) => {
+    if (id === item.id) {
+      item = {
+        ...item,
+        done: !item.done,
+      };
+      return item;
+    } else {
+      return item;
+    }
+  });
+  drawTodosArray();
 };
 
 //УДАЛЕНИЕ ВСЕХ ТУДУШЕК
