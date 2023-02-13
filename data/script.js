@@ -40,10 +40,7 @@ const addTodosArray = () => {
 const switchDone = (id) => {
   todosArray = todosArray.map((item) => {
     if (id === item.id) {
-      item = {
-        ...item,
-        done: !item.done,
-      };
+      item.done = !item.done;
       return item;
     } else {
       return item;
