@@ -4,15 +4,17 @@ const todoAddBtn = document.querySelector(".add");
 const deleteDoneBtn = document.querySelector(".delete_done");
 const deleteAllBtn = document.querySelector(".delete_all");
 const todoDeleteBtn = document.querySelector(".todo__delete");
-let todosArray = [];
+
+let storageArray = JSON.parse(localStorage.getItem("todosArray")) ?? [];
+let todosArray = storageArray;
 
 //РОДИТЕЛЬСКИЕ ЭЛЕМЕНТЫ ДЛЯ ЗАПОЛНЕНИЯ
 const todoList = document.querySelector(".list");
 const deleteField = document.querySelector(".delete_field");
 const form = document.querySelector(".add_field");
 
-//ФОРМИРОВАНИЕ И КОРРЕКТИРОВКА МАССИВА ТУДУШЕК
-function addTodosArray() {
+//ФОРМИРОВАНИЕ МАССИВА ТУДУШЕК
+const addTodosArray = () => {
   let value = todoInput.value;
   if (todoInput.value !== "") {
     todosArray.push({
@@ -25,79 +27,86 @@ function addTodosArray() {
   } else {
     todoAddBtn.style.background = "#F23900";
     todoInput.style.boxShadow = "0px 0px 15px #F23900";
-    function fixBack() {
+    const lightOff = () => {
       todoAddBtn.style.background = "#272829";
       todoInput.style.boxShadow = "none";
-    }
-    setTimeout(fixBack, 200);
+    };
+    setTimeout(lightOff, 200);
   }
   drawTodosArray();
-}
+};
+
+//КОРРЕКТИРОВКА МАССИВА ТУДУШЕК ПО СОСТОЯНИЮ ЧЕКБОКСА
+const switchDone = (id) => {
+  // // for (key in todosArray) drawTodosArray();
+  // if (todosArray.id)
+  console.log("switch");
+};
 
 //УДАЛЕНИЕ ВСЕХ ТУДУШЕК
-function clearAll() {
-  deleteField.style.display = "none";
-  todoList.style.display = "none";
-  // todoInput.value = "";
-  // document.querySelectorAll(".list__item").forEach((el) => el.remove());
+const deleteAll = () => {
   todosArray = [];
   drawTodosArray();
-}
+};
 
-function clearDone() {}
+//УДАЛЕНИЕ ОДНОЙ ТУДУШКИ
+const deleteTodo = (id) => {
+  todosArray = todosArray.filter((item) => item.id !== id);
+  drawTodosArray();
+};
 
-function deleteTodo() {}
+//УДАЛЕНИЕ ВЫБРАННЫХ ТУДУШЕК
+const deleteDone = (done) => {
+  todosArray = todosArray.filter((item) => item.done === false);
+  drawTodosArray();
+};
 
 //ОТРИСОВКА ОДНОЙ ТУДУШКИ
-function drawTodo(item) {
+const drawTodo = (item) => {
   {
-    if (todosArray.length) {
-      deleteField.style.display = "flex";
-      todoList.style.display = "block";
-      const newString = document.createElement("li");
-      newString.className = "list__item";
-      const todoLabel = document.createElement("label");
-      todoLabel.className = ".todo";
-      const todoDoneCheck = document.createElement("input");
-      todoDoneCheck.type = "checkbox";
-      todoDoneCheck.className = "todo__done";
-      todoDoneCheck.checked = item.done;
-      const todoName = document.createElement("span");
-      todoName.className = "todo__name";
-      todoName.textContent = item.text;
-      const todoDeleteBtn = document.createElement("button");
-      todoDeleteBtn.className = "todo__delete";
-      todoDeleteBtn.textContent = "❌";
-      todoLabel.append(todoDoneCheck);
-      todoLabel.append(todoName);
-      newString.append(todoLabel);
-      newString.append(todoDeleteBtn);
-      todoInput.value = "";
-      todoInput.focus();
-      return newString;
-      // РЕАКИЯ НА ПОПЫТКУ ВВЕСТИ ПУСТУЮ СТРОКУ
-    } else {
-      todoAddBtn.style.background = "#F23900";
-      todoInput.style.boxShadow = "0px 0px 15px #F23900";
-      function fixBack() {
-        todoAddBtn.style.background = "#272829";
-        todoInput.style.boxShadow = "none";
-      }
-      setTimeout(fixBack, 200);
-    }
+    deleteField.style.display = "flex";
+    todoList.style.display = "block";
+    const newString = document.createElement("li");
+    newString.className = "list__item";
+    const todoLabel = document.createElement("label");
+    todoLabel.className = ".todo";
+    const todoDoneCheck = document.createElement("input");
+    todoDoneCheck.type = "checkbox";
+    todoDoneCheck.className = "todo__done";
+    todoDoneCheck.checked = item.done;
+    const todoName = document.createElement("span");
+    todoName.className = "todo__name";
+    todoName.textContent = item.text;
+    const todoDeleteBtn = document.createElement("button");
+    todoDeleteBtn.className = "todo__delete";
+    todoDeleteBtn.textContent = "❌";
+    todoLabel.append(todoDoneCheck);
+    todoLabel.append(todoName);
+    newString.append(todoLabel);
+    newString.append(todoDeleteBtn);
+    todoInput.value = "";
+    todoInput.focus();
+    //ОБРАБОТКА КНОПКИ УДАЛЕНИЯ ОДНОЙ ТУДУШКИ
+    todoDeleteBtn.addEventListener("click", () => deleteTodo(item.id));
+    //ОБРАБОТКА МАССИВА ТУДУШЕК ПРИ НАЖАТИИ НА CHECKBOX
+    todoDoneCheck.addEventListener("change", () => switchDone(item.id));
+    return newString;
   }
-  // const todoDeleteBtn = document.querySelector(".todo__delete");
-  // todoDeleteBtn.addEventListener("click", deleteTodo);
-}
+};
 
 //ОТРИСОВКА ВСЕХ ТУДУШЕК ПО СФОРМИРОВАННОМУ МАССИВУ
 const drawTodosArray = () => {
+  //ЕСЛИ МАССИВ ТУДУШЕК ПУСТ - УБИРАЕМ ЛИШНИЕ ПОЛЯ
+  if (!todosArray.length) {
+    deleteField.style.display = "none";
+    todoList.style.display = "none";
+  }
   todoList.innerHTML = "";
-  todosArray.forEach((item) => {
-    todoList.prepend(drawTodo(item));
+  localStorage.setItem("todosArray", JSON.stringify(todosArray));
+  todosArray.forEach((obj) => {
+    todoList.prepend(drawTodo(obj));
+    console.log(todosArray);
   });
-  console.log(todosArray);
-  console.log("drawTodosArray");
 };
 
 //ОТКЛЮЧЕНИЕ БАЗОВОГО ПОВЕДЕНИЯ ЭЛЕМЕНТОВ ФОРМЫ
@@ -105,9 +114,9 @@ form.addEventListener("submit", (ev) => {
   ev.preventDefault();
 });
 
-// drawTodosArray();
+drawTodosArray();
 
 //ПРОСЛУШКА ВСЕХ ЭЛЕМЕНТОВ
 todoAddBtn.addEventListener("click", addTodosArray); // Отрисовка
-deleteAllBtn.addEventListener("click", clearAll); // удалить все
-deleteDoneBtn.addEventListener("click", clearDone); // удалить выполненные
+deleteAllBtn.addEventListener("click", deleteAll); // удалить все
+deleteDoneBtn.addEventListener("click", deleteDone); // удалить выполненные
